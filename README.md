@@ -32,9 +32,8 @@ Read more about it in our paper,
 
 (replace $ds with cdcp or ukp)
 
-0. Unzip the provided data in the subdirectory `data`, i.e. the path
-`./data/process/erule/train/` is valid.  (Information on how to get the data
-coming soon...)
+0. download the data from http://joonsuk.org/ and unzip it in the subdirectory `data`, i.e. the path
+`./data/process/erule/train/` is valid.  
 
 1. extract relevant subset of GloVe embeddings:
 ```
