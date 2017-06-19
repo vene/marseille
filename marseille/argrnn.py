@@ -326,6 +326,10 @@ class ArgumentLSTM(BaseArgumentMixin):
                                                self.sibling_layers,
                                                self.model)
 
+    def __getstate__(self):
+        return {k: v for k, v in self.__dict__.items()
+                if k != 'model' and k[0] != '_'}
+
     def save(self, filename):
         params = [self._compat, self._embed, self._rnn, self._prop_mlp,
                   self._link]
@@ -340,6 +344,23 @@ class ArgumentLSTM(BaseArgumentMixin):
             params.extend([self._sibling])
 
         self.model.save(filename, params)
+
+    def load(self, filename):
+        self.init_params()
+        saved = self.model.load(filename)
+        (self._compat, self._embed, self._rnn, self._prop_mlp,
+         self._link) = saved[:5]
+        saved = saved[5:]
+        saved.reverse()  # so we can just pop
+
+        if self.coparent_layers:
+            self._coparent = saved.pop()
+        if self.grandparent_layers:
+            self._grandparent = saved.pop()
+        if self.sibling_layers:
+            self._sibling = saved.pop()
+
+        assert len(saved) == 0
 
     def build_cg(self, doc, training=True):
 
@@ -547,6 +568,7 @@ class ArgumentLSTM(BaseArgumentMixin):
 
         self.build_vocab(docs)
         self.initialize_labels(Y)
+
         self.init_params()
 
     def fit(self, docs, Y, docs_val=None, Y_val=None):
