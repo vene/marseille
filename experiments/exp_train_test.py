@@ -4,6 +4,7 @@ This uses hyperparameters chosen by cross-validation from exp_* """
 
 import os
 import dill
+import pickle
 
 import numpy as np
 
