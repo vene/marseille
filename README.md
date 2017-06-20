@@ -71,3 +71,19 @@ To reproduce cross-validation model selection, you also would need to run:
     python -m marseille.vectorize folds $ds
 ```
 
+
+#  Running a model on your own data:
+
+(This is still a work in progress.)
+
+First, extract the features. (Necessary even if using RNN-based models.)
+
+``` 
+export CORENLP_PATH=...  #  path to Stanford CoreNLP
+export WINGNUS_PATH=...  #  path to Wing-NUS PDTB parser
+python -m marseille.features user --filename F  # raw input must be in F.txt--
+```
+
+Then you may use the object `UserDoc('F')` inside prediction pipelines.  See
+`experiments/test_serialize.py` for an example.
+

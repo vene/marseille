@@ -548,12 +548,13 @@ if __name__ == '__main__':
     from itertools import permutations
 
     from marseille.argdoc import CdcpArgumentationDoc, UkpEssayArgumentationDoc
+    from marseille.user_doc import UserDoc
     from marseille.datasets import cdcp_train_ids, ukp_ids, cdcp_test_ids
     from docopt import docopt
 
     usage = """
         Usage:
-            features (cdcp|ukp|cdcp-test) [--template=S]
+            features (cdcp|ukp|cdcp-test|user) [--template=S] [--filename=fn]
 
     """
 
@@ -582,18 +583,24 @@ if __name__ == '__main__':
         ids = ukp_ids
         Doc = UkpEssayArgumentationDoc
 
-    for id in ids:
+    elif args['user']:
 
-        doc = Doc(template.format(id))
+        template = "{}"
+        ids = [args['--filename']]
+        Doc = UserDoc
 
-        if args['cdcp'] or args['cdcp-test']:
-            include_preceding = False
-            use_intro = False
-            links = _transitive(doc.links)
-        else:
+    for idx in ids:
+
+        doc = Doc(template.format(idx))
+
+        if args['ukp']:
             links = doc.links
             include_preceding = True
             use_intro = True
+        else:
+            include_preceding = False
+            use_intro = False
+            links = _transitive(doc.links)
 
         prop_ids = range(len(doc.prop_offsets))
 
@@ -603,7 +610,7 @@ if __name__ == '__main__':
                                         use_intro)
                           for prop_id in prop_ids]
 
-        with open(template.format(id) + ".propfeatures.json", "w") as f:
+        with open(template.format(idx) + ".propfeatures.json", "w") as f:
            json.dump(all_prop_feats, f, indent=4, sort_keys=True)
 
         res = []
@@ -619,7 +626,7 @@ if __name__ == '__main__':
             feats['label_'] = (src_id, trg_id) in links  # transitive for cdcp!
             res.append(feats)
 
-        with open(template.format(id) + ".features.json", "w") as f:
+        with open(template.format(idx) + ".features.json", "w") as f:
             json.dump(res, f, indent=4, sort_keys=True)
 
         res = []
@@ -627,5 +634,5 @@ if __name__ == '__main__':
             feats = second_order_features(doc, a, b, c, all_prop_feats)
             res.append(feats)
 
-        with open(template.format(id) + ".sec_ord_features.json", "w") as f:
+        with open(template.format(idx) + ".sec_ord_features.json", "w") as f:
             json.dump(res, f, indent=4, sort_keys=True)

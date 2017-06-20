@@ -7,6 +7,7 @@ import pickle
 
 import numpy as np
 
+from marseille.user_doc import UserDoc
 from marseille.datasets import get_dataset_loader, load_embeds
 from marseille.custom_logging import logging
 from marseille.argrnn import BaselineArgumentLSTM, ArgumentLSTM
@@ -33,7 +34,7 @@ if __name__ == '__main__':
 
     Y_train = [doc.label for doc in train_docs]
 
-    pkl = False
+    pkl = True
 
     if pkl:
         embeds = load_embeds(dataset)
@@ -70,5 +71,6 @@ if __name__ == '__main__':
 
         rnn.load('{}.model.dynet'.format(filename))
 
-    Y_pred = rnn.predict(train_docs[5:9])
+    test_docs = [UserDoc("test")]
+    Y_pred = rnn.predict(test_docs)
     print(Y_pred[0].nodes, Y_pred[0].links)
