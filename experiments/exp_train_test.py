@@ -157,6 +157,9 @@ if __name__ == '__main__':
         baseline.fit(X_tr_link, y_tr_link, X_tr_prop, y_tr_prop)
         Y_pred = baseline.predict(X_te_link, X_te_prop, test_docs, constraints)
 
+        with open('{}.model.pickle'.format(filename), "wb") as fp:
+            pickle.dump(baseline, fp)
+
         np.save('{}.model'.format(filename),
                 (baseline.prop_clf_.coef_, baseline.link_clf_.coef_))
 
@@ -174,6 +177,8 @@ if __name__ == '__main__':
                                               exact_test=exact_test,
                                               **params)
 
+        with open('{}.model.pickle'.format(filename), "wb") as fp:
+            pickle.dump(clf, fp)
         np.save('{}.model'.format(filename), clf.w)
 
     elif method == "rnn":
@@ -197,6 +202,8 @@ if __name__ == '__main__':
                                    **params)
 
         rnn.fit(train_docs, Y_train)
+        with open('{}.model.pickle'.format(filename), "wb") as fp:
+            pickle.dump(rnn, fp)
         rnn.save('{}.model.dynet'.format(filename))
         Y_pred = rnn.predict(test_docs)
 
@@ -227,6 +234,8 @@ if __name__ == '__main__':
                            **params)
 
         rnn.fit(train_docs, Y_train)
+        with open('{}.model.pickle'.format(filename), "wb") as fp:
+            pickle.dump(rnn, fp)
         rnn.save('{}.model.dynet'.format(filename))
         Y_pred = rnn.predict(test_docs)
 
