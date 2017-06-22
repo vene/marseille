@@ -16,7 +16,7 @@ from marseille.struct_models import BaseArgumentMixin
 from marseille.inference import loss_augment_unaries
 from marseille.custom_logging import logging
 from marseille.dynet_utils import (MultiLayerPerceptron, Bilinear,
-                                 MultilinearFactored)
+                                   MultilinearFactored)
 
 
 class LinkMLP(dy.Saveable):

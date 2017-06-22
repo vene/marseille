@@ -82,8 +82,12 @@ def test_learn_training_set():
         assert_array_equal(y_true.links, y_pred.links)
 
 
-def test_serialize():
-    rnn = ArgumentLSTM()
+@pytest.mark.parametrize('link_bilinear', [False, True])
+@pytest.mark.parametrize('second_order_multilinear', [False, True])
+def test_serialize(link_bilinear, second_order_multilinear):
+    rnn = ArgumentLSTM(link_bilinear=link_bilinear,
+                       second_order_multilinear=second_order_multilinear,
+                       sibling_layers=1)
     rnn.fit(docs, Y)
     Y_pred = rnn.predict(docs)
 
@@ -105,7 +109,3 @@ def test_serialize():
     for y_pred, y_pkl_pred in zip(Y_pred, Y_pkl_pred):
         assert_array_equal(y_pkl_pred.nodes, y_pred.nodes)
         assert_array_equal(y_pkl_pred.links, y_pred.links)
-
-
-
-

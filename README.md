@@ -10,10 +10,8 @@ relations between them, as inference in a expressive factor graph.
 
 Read more about it in [our paper](https://arxiv.org/abs/1704.06869),
 
-> Argument Mining with Structured SVMs and RNNs.
->
 > Vlad Niculae, Joonsuk Park, Claire Cardie.
->
+> Argument Mining with Structured SVMs and RNNs.
 > In: Proceedings of ACL, 2017.
 
 If you find this project useful, you may cite us using:
@@ -112,7 +110,6 @@ pretrained model on, read on.
   this automatically.
 
 2. extract the features:
-
 
 ```
     python -m marseille.features user F G  # raw input must be in F.txt & G.txt
