@@ -11,7 +11,10 @@ relations between them, as inference in a expressive factor graph.
 Read more about it in [our paper](https://arxiv.org/abs/1704.06869),
 
 > Argument Mining with Structured SVMs and RNNs.
-> Vlad Niculae, Joonsuk Park, Claire Cardie. In: Proceedings of ACL, 2017.
+>
+> Vlad Niculae, Joonsuk Park, Claire Cardie.
+>
+> In: Proceedings of ACL, 2017.
 
 If you find this project useful, you may cite us using:
 
