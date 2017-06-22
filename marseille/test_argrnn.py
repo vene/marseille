@@ -15,10 +15,10 @@ from marseille.argrnn import ArgumentLSTM
 class ArgDocStub(_BaseArgumentationDoc):
 
     VOCAB = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
     est laborum.""".lower().split()
 
@@ -31,12 +31,12 @@ class ArgDocStub(_BaseArgumentationDoc):
         self._tokens = rng.choice(self.VOCAB, size=n_words)
 
         self.prop_offsets = rng.choice(np.arange(n_words), size=2 * n_props,
-                                  replace=False)
+                                       replace=False)
         self.prop_offsets.sort()
         self.prop_offsets = self.prop_offsets.reshape(-1, 2)
 
-        self._prop_features = [{'label_': lbl}
-            for lbl in rng.choice(self.TYPES, size=n_props)]
+        self._prop_features = [
+            {'label_': lbl} for lbl in rng.choice(self.TYPES, size=n_props)]
 
         self._features = [
             {

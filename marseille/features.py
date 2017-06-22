@@ -162,7 +162,7 @@ def prop_features(doc, prop_id, include_preceding=False, use_intro=False):
             sent_start = np.searchsorted(sent_ix, sent_ix[first_tok])
 
             preceding = [w['originalText'] for w
-                in flat_toks[sent_start:first_tok]]
+                         in flat_toks[sent_start:first_tok]]
 
             first_tok = sent_start
             span_start = tok_offset[first_tok]
@@ -225,8 +225,8 @@ def prop_features(doc, prop_id, include_preceding=False, use_intro=False):
             root_governor = [w for w in sent_nlp['basic-dependencies']
                              if w['dependent'] == vb_ix + 1][0]['governor']
             siblings = [w['dependentGloss'].lower()
-                         for w in sent_nlp['basic-dependencies']
-                         if w['governor'] == root_governor]
+                        for w in sent_nlp['basic-dependencies']
+                        if w['governor'] == root_governor]
 
             for sibling in siblings:
                 if sibling in MODALS:
@@ -516,7 +516,6 @@ def second_order_features(doc, a, b, c, all_prop_feats):
     return feats
 
 
-
 # TODO this is a mess. clean me up!
 def add_pmi_features(f, pmi_in, pmi_out):
     src_n_tokens = f['src__n_tokens']
@@ -562,7 +561,6 @@ if __name__ == '__main__':
     """
 
     args = docopt(usage)
-
 
     if args['cdcp']:
 
@@ -616,7 +614,7 @@ if __name__ == '__main__':
                           for prop_id in prop_ids]
 
         with open(template.format(idx) + ".propfeatures.json", "w") as f:
-           json.dump(all_prop_feats, f, indent=4, sort_keys=True)
+            json.dump(all_prop_feats, f, indent=4, sort_keys=True)
 
         res = []
 

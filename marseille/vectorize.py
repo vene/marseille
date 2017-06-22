@@ -28,29 +28,16 @@ class FilteredDictVectorizer(DictVectorizer):
         self.columns = columns
 
     def fit(self, X, y=None):
-        return super(FilteredDictVectorizer, self).fit([
-                                                           {key: x[key] for key
-                                                            in self.columns}
-                                                           for x in X
-                                                           ])
+        return super(FilteredDictVectorizer, self).fit(
+            [{key: x[key] for key in self.columns} for x in X])
 
     def fit_transform(self, X, y=None):
-        return super(FilteredDictVectorizer, self).fit_transform([
-                                                                     {key: x[
-                                                                         key]
-                                                                      for key
-                                                                      in
-                                                                      self.columns}
-                                                                     for x in X
-                                                                     ])
+        return super(FilteredDictVectorizer, self).fit_transform(
+            [{key: x[key] for key in self.columns} for x in X])
 
     def transform(self, X, y=None):
-        return super(FilteredDictVectorizer, self).transform([
-                                                                 {key: x[key]
-                                                                  for key in
-                                                                  self.columns}
-                                                                 for x in X
-                                                                 ])
+        return super(FilteredDictVectorizer, self).transform(
+            [{key: x[key] for key in self.columns} for x in X])
 
 
 def _lower_words_getter(feats):
@@ -456,6 +443,7 @@ def main():
         with open(_path.format("traintest", "prop-fnames.txt"), "w") as f:
             for fname in fnames:
                 print(fname, file=f)
+
 
 if __name__ == '__main__':
     main()

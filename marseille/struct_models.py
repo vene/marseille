@@ -7,7 +7,6 @@ Pystruct-compatible models.
 
 # AD3 is (c) Andre F. T. Martins, LGPLv3.0: http://www.cs.cmu.edu/~ark/AD3/
 
-import sys
 import warnings
 import numpy as np
 
@@ -18,8 +17,7 @@ from sklearn.preprocessing import LabelEncoder, label_binarize
 from pystruct.models import StructuredModel
 
 from marseille.inference import loss_augment_unaries, CDCP_ILLEGAL_LINKS
-from marseille.vectorize import add_pmi_features
-from marseille.argdoc import DocStructure, DocLabel
+from marseille.argdoc import DocLabel
 from marseille.custom_logging import logging
 
 from itertools import permutations
@@ -66,7 +64,6 @@ class BaseArgumentMixin(object):
                                              y_links_flat)
 
         self.link_cw_ /= self.link_cw_.min()
-
 
         logging.info('Setting node class weights {}'.format(", ".join(
             "{}: {}".format(lbl, cw) for lbl, cw in zip(
@@ -167,13 +164,13 @@ class BaseArgumentMixin(object):
             link = {(a, b): k for k, (a, b) in enumerate(x.link_to_prop)}
             if self.coparents_:
                 second_order.extend(y_link[link[a, b]] & y_link[link[c, b]]
-                                   for a, b, c in x.second_order)
+                                    for a, b, c in x.second_order)
             if self.grandparents_:
                 second_order.extend(y_link[link[a, b]] & y_link[link[b, c]]
-                                   for a, b, c in x.second_order)
+                                    for a, b, c in x.second_order)
             if self.siblings_:
                 second_order.extend(y_link[link[b, a]] & y_link[link[b, c]]
-                                   for a, b, c in x.second_order)
+                                    for a, b, c in x.second_order)
         second_order = np.array(second_order)
 
         return Y_node, Y_link, compat, second_order
@@ -347,7 +344,6 @@ class BaseArgumentMixin(object):
                                            src_v.get_state(premise_ix)],
                                           [False, False])
 
-
         g.fix_multi_variables_without_factors()
         g.set_eta_ad3(eta)
         g.adapt_eta_ad3(adapt)
@@ -398,7 +394,7 @@ class BaseArgumentMixin(object):
                   np.all(y_true.nodes == y_pred.nodes))
         acc /= len(Y_true)
 
-        with warnings.catch_warnings() as w:
+        with warnings.catch_warnings():
             warnings.simplefilter('ignore')
             link_macro, link_micro = arg_f1_scores(
                 (y.links for y in Y_true),
@@ -470,7 +466,7 @@ class ArgumentGraphCRF(BaseArgumentMixin, StructuredModel):
     def _set_size_joint_feature(self):  # assumes no second order
         compat_size = self.n_prop_states ** 2 * self.n_link_states
         if self.compat_features:
-            compat_size  *= self.n_compat_features_
+            compat_size *= self.n_compat_features_
 
         total_n_second_order = (self.n_second_order_features_ *
                                 self.n_second_order_factors_)

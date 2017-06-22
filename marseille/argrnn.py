@@ -53,9 +53,9 @@ class LinkBilinear(dy.Saveable):
     def __init__(self, n_in, n_hid, n_out, n_layers, model):
         dims = [n_in] + [n_hid] * n_layers,
         self.src_mlp = MultiLayerPerceptron(dims, activation=dy.rectify,
-                                             model=model)
+                                            model=model)
         self.trg_mlp = MultiLayerPerceptron(dims, activation=dy.rectify,
-                                             model=model)
+                                            model=model)
 
         self.bilinear = Bilinear(n_hid, n_out, model=model)
 
@@ -548,8 +548,8 @@ class ArgumentLSTM(BaseArgumentMixin):
         if second_order_potentials:
             second_order_potentials = dy.concatenate(second_order_potentials)
             second_order_diff = second_order_marg - second_order_true
-            second_order_obj = dy.dot_product(second_order_potentials,
-                                             dy.inputVector(second_order_diff))
+            second_order_obj = dy.dot_product(
+                second_order_potentials, dy.inputVector(second_order_diff))
             second_order_obj = second_order_obj
             obj.append(second_order_obj)
 
@@ -589,7 +589,7 @@ class ArgumentLSTM(BaseArgumentMixin):
                 val_scores = self._score(Y_val, Y_val_pred)
                 self.scores_.append(val_scores)
 
-                with warnings.catch_warnings() as w:
+                with warnings.catch_warnings():
                     warnings.simplefilter('ignore')
                     print("\t\t   val link: {:.3f}/{:.3f} Node: {:.3f}/{:.3f} "
                           "accuracy {:.3f}".format(*val_scores))
@@ -635,7 +635,7 @@ class ArgumentLSTM(BaseArgumentMixin):
             self.scores_.append(val_scores)
 
         logging.info("Training time: {:.2f}s/iteration ({:.2f}s/doc-iter)"
-            .format(train_time / it, train_time / (it * len(docs))))
+                     .format(train_time / it, train_time / (it * len(docs))))
 
     def predict(self, docs, exact=None):
         if exact is None:
@@ -705,4 +705,3 @@ class BaselineArgumentLSTM(ArgumentLSTM):
 
         max_acc = len(obj_prop + obj_link)
         return obj, max_acc - correct, max_acc, 'n/a'
-
