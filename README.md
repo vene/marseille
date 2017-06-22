@@ -8,11 +8,10 @@
 Marseille learns to predict argumentative proposition types and the support
 relations between them, as inference in a expressive factor graph.
 
-Read more about it in our paper,
+Read more about it in [our paper](https://arxiv.org/abs/1704.06869),
 
 > Argument mining with structured SVMs and RNNs.
 > Vlad Niculae, Joonsuk Park, Claire Cardie. In: Proc. of ACL, 2017.
-> (preprint coming soon)
 
 ## Requirements
 
@@ -30,7 +29,7 @@ Read more about it in our paper,
 
 ## Usage
 
-(replace $ds with cdcp or ukp)
+(replace `$ds` with `cdcp` or `ukp`)
 
 0. download the data from http://joonsuk.org/ and unzip it in the subdirectory `data`, i.e. the path
 `./data/process/erule/train/` is valid.
@@ -94,14 +93,19 @@ pretrained model on, read on.
   WING-NUS parser (e.g., on a different computer), you may skip this step and
   *marseille* will detect those files automatically.
 
+  Otherwise, these files are generated the first time that a `UserDoc` object
+  is instantiated for a given document. In particular, the step below will do
+  this automatically.
+
 2. extract the features:
 
-  This is needed for the RNN models too, because the feature files encode some
-  metadata about the document structure.
 
 ```
     python -m marseille.features user F G  # raw input must be in F.txt & G.txt
 ```
+
+  This is needed for the RNN models too, because the feature files encode some
+  metadata about the document structure.
 
 3. predict, e.g. using the model saved in step 4 above:
 
