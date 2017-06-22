@@ -35,7 +35,7 @@ def _vectorize(doc, pmi_incoming, pmi_outgoing, prop_vect, link_vect,
 
 def fit_predict(train_docs, test_docs, dataset, C, class_weight, constraints,
                 compat_features, second_order, coparents, grandparents,
-                siblings, exact_test=False):
+                siblings, exact_test=False, return_vectorizers=False):
     stats = stats_train(train_docs)
     prop_vect, _ = prop_vectorizer(train_docs,
                                    which=dataset,
@@ -78,6 +78,10 @@ def fit_predict(train_docs, test_docs, dataset, C, class_weight, constraints,
     if exact_test:
         clf.model.exact = True
     Y_pred = clf.predict(X_te)
+
+    if return_vectorizers:
+        vectorizers = (pmi_in, pmi_out, prop_vect, link_vect, sec_ord_vect)
+        return clf, Y_te, Y_pred, vectorizers
 
     return clf, Y_te, Y_pred
 

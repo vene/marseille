@@ -166,20 +166,19 @@ if __name__ == '__main__':
 
     elif method == 'linear-struct':
 
-        clf, Y_te, Y_pred = fit_pred_pystruct(train_docs, test_docs,
-                                              dataset=dataset,
-                                              class_weight='balanced',
-                                              constraints=constraints,
-                                              compat_features=compat_features,
-                                              second_order=second_order,
-                                              coparents=coparents,
-                                              grandparents=grandparents,
-                                              siblings=siblings,
-                                              exact_test=exact_test,
-                                              **params)
+        clf, Y_te, Y_pred, vects = fit_pred_pystruct(train_docs, test_docs,
+            dataset=dataset, class_weight='balanced',
+            constraints=constraints, compat_features=compat_features,
+            second_order=second_order, coparents=coparents,
+            grandparents=grandparents, siblings=siblings,
+            exact_test=exact_test, return_vectorizers=True, **params)
+
+        with open('{}.vectorizers.pickle'.format(filename), "wb") as fp:
+            pickle.dump(vects, fp)
 
         with open('{}.model.pickle'.format(filename), "wb") as fp:
             pickle.dump(clf, fp)
+
         np.save('{}.model'.format(filename), clf.w)
 
     elif method == "rnn":

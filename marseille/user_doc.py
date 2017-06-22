@@ -1,7 +1,5 @@
 import os
-import io
 import shutil
-import json
 import tempfile
 import sys
 from subprocess import run, PIPE
@@ -17,10 +15,11 @@ WINGNUS_PATH = os.environ.get('WINGNUS_PATH', ".")
 def _corenlp_process(filename, corenlp_mem="2g"):
     """Run Stanford CoreNLP on the passed file"""
 
-    result = run(['java', '-cp', CORENLP_PATH, "-Xmx{}".format(corenlp_mem),
-    "edu.stanford.nlp.pipeline.StanfordCoreNLP", "-annotators",
-    "tokenize,ssplit,pos,lemma,ner,parse,depparse,sentiment",
-    "-file", filename, "-outputFormat", "json"], stdout=PIPE, stderr=PIPE)
+    result = run([
+        'java', '-cp', CORENLP_PATH, "-Xmx{}".format(corenlp_mem),
+        "edu.stanford.nlp.pipeline.StanfordCoreNLP", "-annotators",
+        "tokenize,ssplit,pos,lemma,ner,parse,depparse,sentiment",
+        "-file", filename, "-outputFormat", "json"], stdout=PIPE, stderr=PIPE)
 
     if result.returncode != 0:
         raise ValueError("CoreNLP failed: {}".format(result.stderr.decode()))
@@ -37,7 +36,7 @@ def _wing_nus_pdtb_process(filename):
             cwd = os.getcwd()
             os.chdir(WINGNUS_PATH)
             result = run(['java', '-jar', "parser.jar", fn_in],
-                          stdout=PIPE, stderr=PIPE)
+                         stdout=PIPE, stderr=PIPE)
             if result.returncode == 0:
                 os.chdir(cwd)
                 fn_out = os.path.join(tmp_dir, "output", "tmp.txt.pipe")
@@ -94,6 +93,4 @@ class UserDoc(_BaseArgumentationDoc):
 
 if __name__ == '__main__':
 
-
     doc = UserDoc(sys.argv[1])
-
