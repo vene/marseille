@@ -8,8 +8,8 @@ from .argdoc import _BaseArgumentationDoc
 from .custom_logging import logging
 
 
-CORENLP_PATH = os.path.join(os.environ.get('CORENLP_PATH', "."), "*")
-WINGNUS_PATH = os.environ.get('WINGNUS_PATH', ".")
+CORENLP_PATH = os.path.join(os.environ.get('MARSEILLE_CORENLP_PATH', "."), "*")
+WINGNUS_PATH = os.environ.get('MARSEILLE_WINGNUS_PATH', ".")
 
 
 def _corenlp_process(filename, corenlp_mem="2g"):

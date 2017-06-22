@@ -13,7 +13,7 @@ Read more about it in our paper,
 > Argument mining with structured SVMs and RNNs.
 > Vlad Niculae, Joonsuk Park, Claire Cardie. In: Proc. of ACL, 2017.
 > (preprint coming soon)
-    
+
 ## Requirements
 
  - numpy
@@ -33,7 +33,7 @@ Read more about it in our paper,
 (replace $ds with cdcp or ukp)
 
 0. download the data from http://joonsuk.org/ and unzip it in the subdirectory `data`, i.e. the path
-`./data/process/erule/train/` is valid.  
+`./data/process/erule/train/` is valid.
 
 1. extract relevant subset of GloVe embeddings:
 ```
@@ -74,16 +74,39 @@ To reproduce cross-validation model selection, you also would need to run:
 
 #  Running a model on your own data:
 
-(This is still a work in progress.)
+If you have some documents e.g. F.txt, G.txt that you would like to run a
+pretrained model on, read on.
 
-First, extract the features. (Necessary even if using RNN-based models.)
+1. download the required preprocessing toolkits:
+   [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/index.html) (tested
+   with version 3.6.0) and the
+   [WING-NUS PDTB discourse parser](https://github.com/WING-NUS/pdtb-parser)
+   (tested with [this commit]
+   (https://github.com/WING-NUS/pdtb-parser/commit/5ee603a9)) and configure
+   their paths:
 
-``` 
-export CORENLP_PATH=...  #  path to Stanford CoreNLP
-export WINGNUS_PATH=...  #  path to Wing-NUS PDTB parser
-python -m marseille.features user --filename F  # raw input must be in F.txt--
+```
+    export MARSEILLE_CORENLP_PATH=/home/vlad/corenlp  #  path to CoreNLP
+    export MARSEILLE_WINGNUS_PATH=/home/vlad/wingnus  #  path to WING-NUS parser
 ```
 
-Then you may use the object `UserDoc('F')` inside prediction pipelines.  See
-`experiments/test_serialize.py` for an example.
+  Note: If you already generated F.txt.json with CoreNLP and F.txt.pipe with the
+  WING-NUS parser (e.g., on a different computer), you may skip this step and
+  *marseille* will detect those files automatically.
+
+2. extract the features:
+
+  This is needed for the RNN models too, because the feature files encode some
+  metadata about the document structure.
+
+```
+    python -m marseille.features user F G  # raw input must be in F.txt & G.txt
+```
+
+3. predict, e.g. using the model saved in step 4 above:
+
+```
+    python -m experiments.predict_pretrained --method=rnn-struct \
+    test_results/exact=True_cdcp_rnn-struct_strict F G
+```
 

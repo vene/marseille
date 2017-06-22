@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
         Y_pred = rnn.predict(test_docs, exact=args['--exact'])
 
-    if args['--method'] == 'linear-struct':
+    elif args['--method'] == 'linear-struct':
 
         # load the vectorizers
         with open('{}.vectorizers.pickle'.format(model), "rb") as fp:

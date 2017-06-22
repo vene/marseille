@@ -554,16 +554,19 @@ if __name__ == '__main__':
 
     usage = """
         Usage:
-            features (cdcp|ukp|cdcp-test|user) [--template=S] [--filename=fn]
+            features (cdcp|ukp|cdcp-test) [--template=S]
+            features user <file>...
+
+        See README.md
 
     """
 
     args = docopt(usage)
 
-    template = args['--template']
 
     if args['cdcp']:
 
+        template = args['--template']
         if template is None:
             template = 'data/process/erule/train/{:05d}'
         ids = cdcp_train_ids
@@ -571,6 +574,7 @@ if __name__ == '__main__':
 
     elif args['cdcp-test']:
 
+        template = args['--template']
         if template is None:
             template = 'data/process/erule/test/{:05d}'
         ids = cdcp_test_ids
@@ -578,6 +582,7 @@ if __name__ == '__main__':
 
     elif args['ukp']:
 
+        template = args['--template']
         if template is None:
             template = 'data/process/ukp-essays/essay{:03d}'
         ids = ukp_ids
@@ -586,7 +591,7 @@ if __name__ == '__main__':
     elif args['user']:
 
         template = "{}"
-        ids = [args['--filename']]
+        ids = args['<file>']
         Doc = UserDoc
 
     for idx in ids:
