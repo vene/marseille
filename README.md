@@ -92,9 +92,9 @@ pretrained model on, read on.
    [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/index.html) (tested
    with version 3.6.0) and the
    [WING-NUS PDTB discourse parser](https://github.com/WING-NUS/pdtb-parser)
-   (tested with [this commit]
-   (https://github.com/WING-NUS/pdtb-parser/commit/5ee603a9)) and configure
-   their paths:
+   (tested with
+   [this commit](https://github.com/WING-NUS/pdtb-parser/commit/5ee603a9))
+   and configure their paths:
 
 ```
     export MARSEILLE_CORENLP_PATH=/home/vlad/corenlp  #  path to CoreNLP
