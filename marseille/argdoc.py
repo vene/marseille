@@ -398,6 +398,9 @@ class DocLabel(object):
         self.nodes = nodes
         self.links = links
 
+    def __repr__(self):
+        return("DocLabel(nodes={}, links={})".format(self.nodes, self.links))
+
 
 class DocStructure(object):
     def __init__(self, doc, nodes=None, links=None,

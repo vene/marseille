@@ -100,6 +100,10 @@ class MultilinearFactored(dy.Saveable):
         out = dy.sum_cols(dy.transpose(out))
         return out
 
+    # dynet is confused by lists of params, have to drop it manually
+    def __getstate__(self):
+        return {k: v for k, v in self.__dict__.items() if k != 'U'}
+
     def get_components(self):
         return self.U
 

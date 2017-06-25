@@ -6,7 +6,6 @@ import dill
 import numpy as np
 from scipy.sparse import csr_matrix
 
-from marseille.custom_logging import logging
 
 def save_csr(fname, X, y=None):
     X = X.tocsr()

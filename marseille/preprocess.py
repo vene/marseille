@@ -33,7 +33,6 @@ def _transitive(links):
     For input [(1, 2), (2, 3)] the output is [(1, 2), (2, 3), (1, 3)]
     """
 
-    old_links = links
     links = set(links)
     while True:
         new_links = [(src_a, trg_b)
@@ -245,4 +244,3 @@ if __name__ == '__main__':
     elif args['from-json']:
         raise NotImplementedError()
     #     from_json()
-
