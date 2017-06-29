@@ -34,7 +34,7 @@ If you find this project useful, you may cite us using:
  - nltk
  - dill
  - docopt
- - [dynet](https://github.com/clab/dynet)
+ - [dynet v1.1](https://github.com/clab/dynet/releases/tag/v1.1)
  - [lightning](https://github.com/scikit-learn-contrib/lightning)
  - [ad3 (development version)](https://github.com/vene/ad3/tree/newrel)
 
