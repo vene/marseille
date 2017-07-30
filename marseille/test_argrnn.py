@@ -24,7 +24,8 @@ class ArgDocStub(_BaseArgumentationDoc):
 
     TYPES = ["fact", "value", "policy"]
 
-    def __init__(self, n_words=20, n_props=3, random_state=None):
+    def __init__(self, n_words=20, n_props=3, prop_types=None,
+                 random_state=None):
         self.random_state = random_state
 
         rng = check_random_state(self.random_state)
@@ -35,8 +36,11 @@ class ArgDocStub(_BaseArgumentationDoc):
         self.prop_offsets.sort()
         self.prop_offsets = self.prop_offsets.reshape(-1, 2)
 
+        if prop_types is None:
+            prop_types = self.TYPES
+
         self._prop_features = [
-            {'label_': lbl} for lbl in rng.choice(self.TYPES, size=n_props)]
+            {'label_': lbl} for lbl in rng.choice(prop_types, size=n_props)]
 
         self._features = [
             {
@@ -50,6 +54,7 @@ class ArgDocStub(_BaseArgumentationDoc):
 
         self._link_to_prop = None
         self._second_order = None
+        self.prop_para = np.zeros(len(self.prop_offsets))
 
     def tokens(self, key=None, lower=True):
 

@@ -4,8 +4,6 @@
 import numpy as np
 import dynet as dy
 
-from nose.tools import assert_almost_equal
-
 from marseille.dynet_utils import MultilinearFactored
 
 
@@ -25,4 +23,4 @@ def test_multilinear_forward():
     expected *= np.dot(U[2], c)
     expected = np.sum(expected)
 
-    assert_almost_equal(expected, dy_fwd, 4)
+    assert (expected - dy_fwd) ** 2 < 1e-4
