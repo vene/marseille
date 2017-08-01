@@ -36,7 +36,7 @@ If you find this project useful, you may cite us using:
  - docopt
  - [dynet v1.1](https://github.com/clab/dynet/releases/tag/v1.1)
  - [lightning](https://github.com/scikit-learn-contrib/lightning)
- - [ad3 (development version)](https://github.com/vene/ad3/tree/newrel)
+ - [ad3 >= v2.1](https://github.com/andre-martins/AD3/releases/tag/2.1) (`pip install ad3`)
 
 
 ## Usage
